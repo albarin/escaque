@@ -28,7 +28,8 @@
 							selected: isSelected(i, j),
 							white: !isSelected(i, j) && (i + j) % 2 === 0,
 							black: !isSelected(i, j) && (i + j) % 2 !== 0,
-							'border-4 border-yellow-400': moves.some((move) => move.x === i && move.y === j)
+							move: moves.some((move) => move.x === i && move.y === j),
+							capture: moves.some((move) => move.x === i && move.y === j) && board[i][j]
 						}
 					]}
 				>
@@ -64,6 +65,14 @@
 	.cell.black {
 		background-color: #666;
 		color: white;
+	}
+
+	.cell.move {
+		background-color: #b1c131;
+	}
+
+	.cell.capture {
+		background-color: #c13131;
 	}
 
 	.selected {
