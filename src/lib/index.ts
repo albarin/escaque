@@ -1,3 +1,16 @@
+import bpawn from '$lib/assets/pieces/bpawn.svg';
+import bknight from '$lib/assets/pieces/bknight.svg';
+import bbishop from '$lib/assets/pieces/bbishop.svg';
+import brook from '$lib/assets/pieces/brook.svg';
+import bqueen from '$lib/assets/pieces/bqueen.svg';
+import bking from '$lib/assets/pieces/bking.svg';
+import wpawn from '$lib/assets/pieces/wpawn.svg';
+import wknight from '$lib/assets/pieces/wknight.svg';
+import wbishop from '$lib/assets/pieces/wbishop.svg';
+import wrook from '$lib/assets/pieces/wrook.svg';
+import wqueen from '$lib/assets/pieces/wqueen.svg';
+import wking from '$lib/assets/pieces/wking.svg';
+
 export type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
 export type Color = 'white' | 'black';
 
@@ -23,4 +36,27 @@ export function initBoard(): (Piece | null)[][] {
     });
 
     return board;
+}
+
+export function getPieceImage(piece: Piece): string {
+    const pieces: Record<string, Record<PieceType, string>> = {
+        b: {
+            pawn: bpawn,
+            knight: bknight,
+            bishop: bbishop,
+            rook: brook,
+            queen: bqueen,
+            king: bking
+        },
+        w: {
+            pawn: wpawn,
+            knight: wknight,
+            bishop: wbishop,
+            rook: wrook,
+            queen: wqueen,
+            king: wking
+        }
+    };
+
+    return pieces[piece.color[0]][piece.type];
 }

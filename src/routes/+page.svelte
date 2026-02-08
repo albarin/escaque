@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { initBoard, type Piece } from '$lib';
+	import { getPieceImage, initBoard, type Piece } from '$lib';
 
 	const board: (Piece | null)[][] = initBoard();
 </script>
@@ -9,9 +9,11 @@
 		<div class="row">
 			{#each row as _, j}
 				<div class="cell {(i + j) % 2 === 0 ? 'white' : 'black'}">
-					<p>{board[i][j]?.type}</p>
-					_
-					<p>{board[i][j]?.color[0]}</p>
+					{#if board[i][j]}
+						<button class="cursor-pointer">
+							<img class="w-16" src={getPieceImage(board[i][j])} alt={board[i][j]?.type} />
+						</button>
+					{/if}
 				</div>
 			{/each}
 		</div>
@@ -37,7 +39,7 @@
 	}
 
 	.cell.black {
-		background-color: #444;
+		background-color: #666;
 		color: white;
 	}
 </style>
