@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { getPieceImage, initBoard, type Piece } from '$lib';
+	import { getPieceImage, initBoard, type Piece, type Board, getMoves } from '$lib';
 
-	const board: (Piece | null)[][] = initBoard();
+	const board: Board = initBoard();
 
-	let selectedPiece: { piece: Piece; x: number; y: number } | null = $state(null);
+	let selectedPiece: Piece | null = $state(null);
+	let moves: { x: number; y: number }[] = $state([]);
+	$inspect(moves);
 
-	function selectPiece(piece: Piece, x: number, y: number) {
-		selectedPiece = { piece, x, y };
+	function selectPiece(piece: Piece) {
+		selectedPiece = piece;
+		moves = getMoves(board, piece);
 	}
 
 	function isSelected(x: number, y: number) {
@@ -21,15 +24,16 @@
 				<div
 					class={[
 						'cell',
-                        {
-                            selected: isSelected(i, j),
-                            white: !isSelected(i, j) && (i + j) % 2 === 0,
-                            black: !isSelected(i, j) && (i + j) % 2 !== 0
-                        }
+						{
+							selected: isSelected(i, j),
+							white: !isSelected(i, j) && (i + j) % 2 === 0,
+							black: !isSelected(i, j) && (i + j) % 2 !== 0,
+							'border-4 border-yellow-400': moves.some((move) => move.x === i && move.y === j)
+						}
 					]}
 				>
 					{#if board[i][j]}
-						<button class="cursor-pointer" onclick={() => selectPiece(board[i][j]!, i, j)}>
+						<button class="cursor-pointer" onclick={() => selectPiece(board[i][j]!)}>
 							<img class="w-17" src={getPieceImage(board[i][j])} alt={board[i][j]?.type} />
 						</button>
 					{/if}
