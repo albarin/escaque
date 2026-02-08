@@ -4,11 +4,11 @@
 	const board: (Piece | null)[][] = initBoard();
 </script>
 
-<div>
+<div class="mx-auto mt-20 w-160 border-8 border-cyan-950">
 	{#each board as row, i}
 		<div class="row">
 			{#each row as _, j}
-				<div class="cell">
+				<div class="cell {(i + j) % 2 === 0 ? 'white' : 'black'}">
 					<p>{board[i][j]?.type}</p>
 					_
 					<p>{board[i][j]?.color[0]}</p>
@@ -27,9 +27,17 @@
 	.cell {
 		width: 80px;
 		height: 80px;
-		border: 1px solid black;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.cell.white {
+		background-color: #eee;
+	}
+
+	.cell.black {
+		background-color: #444;
+		color: white;
 	}
 </style>
