@@ -5,7 +5,6 @@
 
 	let selectedPiece: Piece | null = $state(null);
 	let moves: { x: number; y: number }[] = $state([]);
-	$inspect(moves);
 
 	function selectPiece(piece: Piece) {
 		selectedPiece = piece;
