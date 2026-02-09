@@ -66,12 +66,7 @@
 						{
 							selected: isSelected(i, j),
 							'bg-white': !isSelected(i, j) && (i + j) % 2 === 0,
-							'bg-black': !isSelected(i, j) && (i + j) % 2 !== 0,
-							move: moves.some((move) => move.x === i && move.y === j),
-							capture:
-								moves.some((move) => move.x === i && move.y === j) &&
-								board[i][j] &&
-								board[i][j]!.color !== selectedPiece?.color
+							'bg-black': !isSelected(i, j) && (i + j) % 2 !== 0
 						}
 					]}
 					onclick={() => handleCellClick(i, j)}
@@ -106,6 +101,13 @@
 						<div class="cursor-pointer">
 							<img class="w-17" src={getPieceImage(board[i][j])} alt={board[i][j]?.type} />
 						</div>
+					{/if}
+					{#if moves.some((move) => move.x === i && move.y === j)}
+						{#if !board[i][j] || board[i][j]!.color === selectedPiece?.color}
+							<div class="dot"></div>
+						{:else}
+							<div class="capture"></div>
+						{/if}
 					{/if}
 				</button>
 			{/each}
@@ -143,12 +145,23 @@
 		color: #666;
 	}
 
-	.cell.move {
-		background-color: #b1c131;
+	.dot {
+		height: 25px;
+		width: 25px;
+		opacity: 0.25;
+		background-color: black;
+		border-radius: 50%;
+		display: inline-block;
 	}
 
-	.cell.capture {
-		background-color: #c13131;
+	.capture {
+		height: 75px;
+		width: 75px;
+		opacity: 0.3;
+		border: 7px solid #80030f;
+		background-color: transparent;
+		border-radius: 50%;
+		position: absolute;
 	}
 
 	.selected {

@@ -42,7 +42,7 @@ export function initBoard(): (Piece | null)[][] {
         board[7][i] = { x: 7, y: i, type, color: 'white' } as Piece;
     });
 
-    // board[2][3] = { x: 2, y: 3, type: 'knight', color: 'white' } as Piece; // For testing
+    board[2][3] = { x: 2, y: 3, type: 'knight', color: 'white' } as Piece; // For testing
     // board[1][4] = { x: 1, y: 4, type: 'pawn', color: 'white' } as Piece; // For testing
 
     return board;
