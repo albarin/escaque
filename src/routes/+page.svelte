@@ -62,10 +62,11 @@
 				<button
 					class={[
 						'cell',
+						'relative',
 						{
 							selected: isSelected(i, j),
-							white: !isSelected(i, j) && (i + j) % 2 === 0,
-							black: !isSelected(i, j) && (i + j) % 2 !== 0,
+							'bg-white': !isSelected(i, j) && (i + j) % 2 === 0,
+							'bg-black': !isSelected(i, j) && (i + j) % 2 !== 0,
 							move: moves.some((move) => move.x === i && move.y === j),
 							capture:
 								moves.some((move) => move.x === i && move.y === j) &&
@@ -75,6 +76,32 @@
 					]}
 					onclick={() => handleCellClick(i, j)}
 				>
+					{#if i === 7}
+						<div
+							class={[
+								'absolute bottom-0.5 left-1 text-xs',
+								{
+									'text-black': (i + j) % 2 === 0,
+									'text-white': (i + j) % 2 !== 0
+								}
+							]}
+						>
+							{String.fromCharCode(97 + j)}
+						</div>
+					{/if}
+					{#if j === 0}
+						<div
+							class={[
+								'absolute top-1 left-1 text-xs',
+								{
+									'text-black': (i + j) % 2 === 0,
+									'text-white': (i + j) % 2 !== 0
+								}
+							]}
+						>
+							{8 - i}
+						</div>
+					{/if}
 					{#if board[i][j]}
 						<div class="cursor-pointer">
 							<img class="w-17" src={getPieceImage(board[i][j])} alt={board[i][j]?.type} />
@@ -100,13 +127,20 @@
 		justify-content: center;
 	}
 
-	.cell.white {
+	.bg-white {
 		background-color: #eee;
 	}
 
-	.cell.black {
+	.bg-black {
 		background-color: #666;
-		color: white;
+	}
+
+	.text-white {
+		color: #eee;
+	}
+
+	.text-black {
+		color: #666;
 	}
 
 	.cell.move {
