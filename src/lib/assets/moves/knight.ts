@@ -1,4 +1,4 @@
-import { isOpponentPiece, squareIsInBounds, type Board, type Piece } from "$lib";
+import { isKing, isOpponentPiece, squareIsInBounds, type Board, type Piece } from "$lib";
 
 export function getKnightMoves(board: Board, piece: Piece): { x: number; y: number }[] {
     const moves: { x: number; y: number }[] = [];
@@ -24,11 +24,20 @@ export function getKnightMoves(board: Board, piece: Piece): { x: number; y: numb
 
         const targetPiece = board[newX][newY];
 
-        if (targetPiece && !isOpponentPiece(piece, targetPiece)) {
+        if (!targetPiece) {
+            moves.push({ x: newX, y: newY });
             continue;
         }
 
-        if (!targetPiece || isOpponentPiece(piece, targetPiece)) {
+        if (isKing(targetPiece)) {
+            continue;
+        }
+
+        if (!isOpponentPiece(piece, targetPiece)) {
+            continue;
+        }
+
+        if (isOpponentPiece(piece, targetPiece)) {
             moves.push({ x: newX, y: newY });
         }
     }

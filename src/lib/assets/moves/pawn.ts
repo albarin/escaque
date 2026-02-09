@@ -1,4 +1,4 @@
-import { squareIsInBounds, type Board, type Piece } from "$lib";
+import { isKing, isOpponentPiece, pieceIsInTheBackRank, squareIsInBounds, type Board, type Piece } from "$lib";
 
 export function getPawnMoves(board: Board, piece: Piece): { x: number; y: number }[] {
     const moves: { x: number; y: number }[] = [];
@@ -25,7 +25,7 @@ export function getPawnMoves(board: Board, piece: Piece): { x: number; y: number
     // Capture diagonally to the left
     if (squareIsInBounds(piece.x + direction, piece.y - 1)) {
         const captureLeft = board[piece.x + direction][piece.y - 1];
-        if (piece.y - 1 >= 0 && captureLeft && captureLeft.color !== piece.color) {
+        if (captureLeft && isOpponentPiece(piece, captureLeft) && !isKing(captureLeft)) {
             moves.push({ x: piece.x + direction, y: piece.y - 1 });
         }
     }
@@ -33,13 +33,12 @@ export function getPawnMoves(board: Board, piece: Piece): { x: number; y: number
     // Capture diagonally to the right
     if (squareIsInBounds(piece.x + direction, piece.y + 1)) {
         const captureRight = board[piece.x + direction][piece.y + 1];
-        if (piece.y + 1 < 8 && captureRight && captureRight.color !== piece.color) {
+        if (captureRight && isOpponentPiece(piece, captureRight) && !isKing(captureRight)) {
             moves.push({ x: piece.x + direction, y: piece.y + 1 });
         }
     }
 
     // TODO: Implement capture en passant
-    // TODO: Implement promotion
 
     return moves;
 }

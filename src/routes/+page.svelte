@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { getPieceImage, initBoard, type Piece, type Board, getMoves } from '$lib';
+	import {
+		getPieceImage,
+		initBoard,
+		type Piece,
+		type Board,
+		getMoves,
+		pieceIsInTheBackRank
+	} from '$lib';
 
 	let board: Board = $state(initBoard());
 
@@ -40,6 +47,10 @@
 			selectPiece(piece);
 		} else if (selectedPiece && moves.some((move) => move.x === x && move.y === y)) {
 			movePiece(x, y);
+			const targetPiece = board[x][y];
+			if (targetPiece && pieceIsInTheBackRank(targetPiece) && targetPiece.type === 'pawn') {
+				targetPiece.type = 'queen';
+			}
 		}
 	}
 </script>

@@ -43,7 +43,7 @@ export function initBoard(): (Piece | null)[][] {
     });
 
     // board[2][3] = { x: 2, y: 3, type: 'knight', color: 'white' } as Piece; // For testing
-    // board[6][4] = { x: 6, y: 4, type: 'pawn', color: 'white' } as Piece; // For testing
+    // board[1][4] = { x: 1, y: 4, type: 'pawn', color: 'white' } as Piece; // For testing
 
     return board;
 }
@@ -97,4 +97,16 @@ export function squareIsInBounds(x: number, y: number): boolean {
 
 export function isKing(piece: Piece): boolean {
     return piece.type === 'king';
+}
+
+export function pieceIsWhite(piece: Piece): boolean {
+    return piece.color === 'white';
+}
+
+export function pieceIsBlack(piece: Piece): boolean {
+    return piece.color === 'black';
+}
+
+export function pieceIsInTheBackRank(piece: Piece): boolean {
+    return (pieceIsWhite(piece) && piece.x === 0) || (pieceIsBlack(piece) && piece.x === 7);
 }
