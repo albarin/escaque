@@ -11,6 +11,7 @@ import wknight from '$lib/assets/pieces/wknight.svg';
 import wpawn from '$lib/assets/pieces/wpawn.svg';
 import wqueen from '$lib/assets/pieces/wqueen.svg';
 import wrook from '$lib/assets/pieces/wrook.svg';
+import { getKnightMoves } from './assets/moves/knight';
 
 export type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
 export type Color = 'white' | 'black';
@@ -40,7 +41,8 @@ export function initBoard(): (Piece | null)[][] {
         board[7][i] = { x: 7, y: i, type, color: 'white' } as Piece;
     });
 
-    board[2][3] = { x: 2, y: 3, type: 'pawn', color: 'white' } as Piece; // For testing en passant
+    // board[2][3] = { x: 2, y: 3, type: 'knight', color: 'white' } as Piece; // For testing
+    board[6][4] = { x: 6, y: 4, type: 'pawn', color: 'white' } as Piece; // For testing
 
     return board;
 }
@@ -73,6 +75,17 @@ export function getMoves(board: Board, piece: Piece): { x: number; y: number }[]
         return getPawnMoves(board, piece);
     }
 
+    if (piece.type === 'knight') {
+        return getKnightMoves(board, piece);
+    }
+
     return [];
 }
 
+export function isOpponentPiece(piece1: Piece, piece2: Piece): boolean {
+    return piece1.color !== piece2.color;
+}
+
+export function squareIsInBounds(x: number, y: number): boolean {
+    return x >= 0 && x < 8 && y >= 0 && y < 8;
+}
